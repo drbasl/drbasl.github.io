@@ -3,1482 +3,685 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="تحليل فني شامل للبيتكوين BTCUSDT - 8 مدارس تحليلية | نسبة نجاح 78% | مقدم من DRBASL">
-    <meta name="keywords" content="بيتكوين, تحليل فني, BTCUSDT, تداول, عملات رقمية, Bitcoin, Technical Analysis">
-    <meta name="author" content="DRBASL | @hzbr_al">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="تحليل BTCUSDT الشامل - نسبة نجاح 78%">
-    <meta property="og:description" content="تحليل فني متقدم للبيتكوين باستخدام 8 مدارس تحليلية | هدف 145K$">
-    <meta property="og:image" content="https://i.imgur.com/placeholder.png">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="تحليل BTCUSDT الشامل - نسبة نجاح 78%">
-    <meta property="twitter:description" content="تحليل فني متقدم للبيتكوين باستخدام 8 مدارس تحليلية | هدف 145K$">
-    <meta property="twitter:creator" content="@hzbr_al">
-    
-    <title>تحليل BTCUSDT الشامل | Bitcoin Technical Analysis</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
-    
+    <title>لوحة تحليل البيتكوين الشاملة - BTC Analysis Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/recharts@2.5.0/dist/Recharts.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
         
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
             font-family: 'Cairo', sans-serif;
         }
         
         body {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
             min-height: 100vh;
-            padding: 20px;
         }
         
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        /* زر المشاركة */
-        .share-button {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            z-index: 1000;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .share-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            text-decoration: none;
-        }
-        
-        .share-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-        
-        .twitter-share {
-            background: linear-gradient(135deg, #1da1f2, #0d8bd9);
-        }
-        
-        .telegram-share {
-            background: linear-gradient(135deg, #0088cc, #006699);
-        }
-        
-        .whatsapp-share {
-            background: linear-gradient(135deg, #25d366, #128c7e);
-        }
-        
-        .header {
+        .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 30px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 20px;
+        .gradient-green {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         }
         
-        .header-title h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .gradient-red {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         }
         
-        .author-badge {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            flex-wrap: wrap;
-        }
-        
-        .author-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .author-name {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #60a5fa;
-        }
-        
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
-            background: rgba(29, 155, 240, 0.2);
-            border: 1px solid rgba(29, 155, 240, 0.4);
-            border-radius: 25px;
-            text-decoration: none;
-            color: #1d9bf0;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .social-link:hover {
-            background: rgba(29, 155, 240, 0.3);
-            transform: translateY(-2px);
-        }
-        
-        .header-price {
-            text-align: left;
-        }
-        
-        .price-value {
-            font-size: 3rem;
-            font-weight: bold;
-        }
-        
-        .price-change {
-            font-size: 1.5rem;
-            color: #6ee7b7;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-        
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-        
-        .tab {
-            padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-        
-        .tab:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-        
-        .tab.active {
-            background: rgba(255, 255, 255, 0.25);
-            border-bottom: 3px solid #10b981;
-        }
-        
-        .content {
-            display: none;
-        }
-        
-        .content.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .grid {
-            display: grid;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .grid-2 {
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        .gradient-orange {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         }
         
         .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s;
         }
         
         .card:hover {
             background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        .card-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        
-        .fear-greed-container {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .gauge-wrapper {
-            position: relative;
-            width: 300px;
-            height: 150px;
-            margin: 30px auto;
-        }
-        
-        .gauge {
-            width: 100%;
-            height: 100%;
-            background: conic-gradient(
-                from 180deg,
-                #dc2626 0deg 36deg,
-                #f59e0b 36deg 72deg,
-                #fbbf24 72deg 108deg,
-                #10b981 108deg 144deg,
-                #059669 144deg 180deg
-            );
-            border-radius: 150px 150px 0 0;
-        }
-        
-        .gauge-pointer {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 4px;
-            height: 120px;
-            background: white;
-            transform-origin: bottom center;
-            transition: transform 1s ease-out;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-        
-        .gauge-pointer::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: -4px;
-            width: 12px;
-            height: 12px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(255,255,255,0.8);
-        }
-        
-        .gauge-value {
-            margin-top: 30px;
-            font-size: 3rem;
-            font-weight: bold;
-        }
-        
-        .gauge-label {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        
-        .gauge-legend {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .support-item, .resistance-item {
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 15px;
-            border: 1px solid;
-        }
-        
-        .support-item {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-        
-        .resistance-item {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: rgba(239, 68, 68, 0.3);
-        }
-        
-        .level-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .level-price {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-        
-        .level-badge {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        
-        .support-item .level-price {
-            color: #10b981;
-        }
-        
-        .support-item .level-badge {
-            background: rgba(16, 185, 129, 0.3);
-        }
-        
-        .resistance-item .level-price {
-            color: #ef4444;
-        }
-        
-        .resistance-item .level-badge {
-            background: rgba(239, 68, 68, 0.3);
-        }
-        
-        .entry-card {
-            padding: 25px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            border-radius: 15px;
-        }
-        
-        .entry-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 15px;
-        }
-        
-        .entry-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #60a5fa;
-            margin-bottom: 10px;
-        }
-        
-        .entry-price {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-        
-        .entry-allocation {
-            text-align: left;
-        }
-        
-        .allocation-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #fbbf24;
-        }
-        
-        .stars {
-            margin: 10px 0;
-        }
-        
-        .star {
-            color: #fbbf24;
-            font-size: 1.2rem;
-        }
-        
-        .star.empty {
-            color: #374151;
-        }
-        
-        .entry-reasons {
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
-        
-        .stop-loss-card {
-            padding: 25px;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .sl-price {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #ef4444;
-        }
-        
-        .sl-risk {
-            text-align: left;
-        }
-        
-        .risk-value {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-        
-        .target-item {
-            padding: 20px;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 15px;
-        }
-        
-        .target-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .target-label {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #10b981;
-        }
-        
-        .target-price {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #10b981;
-        }
-        
-        .target-profit {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        
-        .profit-value {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #fbbf24;
-        }
-        
-        .target-action {
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            font-size: 0.9rem;
-        }
-        
-        .scenario-item {
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 15px;
-            border: 1px solid;
-        }
-        
-        .scenario-bullish {
-            background: rgba(16, 185, 129, 0.15);
-            border-color: rgba(16, 185, 129, 0.4);
-        }
-        
-        .scenario-bearish {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: rgba(239, 68, 68, 0.4);
-        }
-        
-        .scenario-neutral {
-            background: rgba(251, 191, 36, 0.15);
-            border-color: rgba(251, 191, 36, 0.4);
-        }
-        
-        .scenario-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .scenario-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        .scenario-percentage {
-            font-size: 2rem;
-            font-weight: bold;
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
         }
         
         .progress-bar {
-            width: 100%;
-            height: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 15px 0;
+            transition: width 1s ease-in-out;
         }
         
-        .progress-fill {
-            height: 100%;
-            transition: width 1s ease-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
         
-        .timeline-item {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .timeline-marker {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .timeline-number {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.5);
-        }
-        
-        .timeline-line {
-            width: 2px;
-            flex: 1;
-            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
-            margin: 10px 0;
-        }
-        
-        .timeline-content {
-            flex: 1;
-            padding: 20px;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            border-radius: 15px;
-        }
-        
-        .timeline-week {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #60a5fa;
-            margin-bottom: 10px;
-        }
-        
-        .timeline-target {
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(139, 92, 246, 0.3);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-        
-        .rule-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 10px;
-        }
-        
-        .emergency-card {
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            border: 1px solid;
-        }
-        
-        .emergency-red {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: rgba(239, 68, 68, 0.4);
-        }
-        
-        .emergency-green {
-            background: rgba(16, 185, 129, 0.15);
-            border-color: rgba(16, 185, 129, 0.4);
-        }
-        
-        .emergency-yellow {
-            background: rgba(251, 191, 36, 0.15);
-            border-color: rgba(251, 191, 36, 0.4);
-        }
-        
-        .emergency-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        .emergency-red .emergency-title {
-            color: #ef4444;
-        }
-        
-        .emergency-green .emergency-title {
-            color: #10b981;
-        }
-        
-        .emergency-yellow .emergency-title {
-            color: #fbbf24;
-        }
-        
-        .emergency-list {
-            list-style: none;
-        }
-        
-        .emergency-list li {
-            padding: 8px 0;
-            font-size: 0.95rem;
-        }
-        
-        .school-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
-            border-radius: 10px;
-        }
-        
-        .school-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        
-        .school-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .school-score {
-            color: #10b981;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .school-analysis {
-            font-size: 0.85rem;
-            opacity: 0.8;
-        }
-        
-        .mtf-item {
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 15px;
-            border: 1px solid;
-        }
-        
-        .mtf-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .mtf-timeframe {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        .mtf-trend {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        
-        .footer {
-            margin-top: 40px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            text-align: center;
-        }
-        
-        .footer-warning {
-            font-size: 0.9rem;
-            opacity: 0.7;
-            margin-bottom: 10px;
-        }
-        
-        .final-message {
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .final-title {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        
-        .final-quote {
-            font-size: 1.3rem;
-            opacity: 0.8;
-            margin-bottom: 30px;
-        }
-        
-        .final-button {
-            display: inline-block;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            border-radius: 15px;
-            font-weight: bold;
-            font-size: 1.3rem;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
-        }
-        
-        @media (max-width: 768px) {
-            .header-title h1 {
-                font-size: 1.8rem;
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
             }
-            
-            .price-value {
-                font-size: 2rem;
+            50% {
+                opacity: .5;
             }
-            
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            
-            .tabs {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-            }
-            
-            .gauge-wrapper {
-                width: 250px;
-                height: 125px;
-            }
-            
-            .share-button {
-                bottom: 20px;
-                left: 20px;
-            }
-            
-            .share-btn {
-                width: 50px;
-                height: 50px;
-            }
-            
-            .author-badge {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+        }
+        
+        .tab-active {
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid #10b981;
+        }
+        
+        .fear-gauge {
+            background: conic-gradient(
+                from 180deg,
+                #dc2626 0deg,
+                #f59e0b 72deg,
+                #fbbf24 108deg,
+                #10b981 144deg,
+                #059669 180deg
+            );
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body>
-    <!-- أزرار المشاركة العائمة -->
-    <div class="share-button">
-        <a href="https://twitter.com/intent/tweet?text=تحليل%20BTCUSDT%20الشامل%20-%20نسبة%20نجاح%2078%25%20🎯&url=YOUR_LINK_HERE&via=hzbr_al&hashtags=Bitcoin,BTCUSDT,تحليل_فني" target="_blank" class="share-btn twitter-share" title="مشاركة على X (تويتر)">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-        </a>
-        <a href="https://t.me/share/url?url=YOUR_LINK_HERE&text=تحليل%20BTCUSDT%20الشامل%20-%20نسبة%20نجاح%2078%25%20🎯" target="_blank" class="share-btn telegram-share" title="مشاركة على تيليجرام">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.14.121.098.155.23.171.324.016.062.036.201.02.312z"/>
-            </svg>
-        </a>
-        <a href="https://api.whatsapp.com/send?text=تحليل%20BTCUSDT%20الشامل%20-%20نسبة%20نجاح%2078%25%20🎯%20YOUR_LINK_HERE" target="_blank" class="share-btn whatsapp-share" title="مشاركة على واتساب">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-        </a>
-    </div>
+<body class="text-white">
+    <div id="root"></div>
 
-    <div class="container">
-        <!-- الرأس -->
-        <div class="header">
-            <div class="header-top">
-                <div class="header-title">
-                    <h1>تحليل BTCUSDT الشامل</h1>
-                    <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 10px;">التحليل الفني المتقدم - 25 أكتوبر 2025</p>
-                    <div class="author-badge">
-                        <div class="author-info">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                            </svg>
-                            <span style="font-size: 1rem; font-weight: bold;">مقدم من:</span>
-                        </div>
-                        <div class="author-info">
-                            <span class="author-name">DRBASL | 966</span>
-                            <span style="font-size: 1.2rem;">🇸🇦</span>
-                        </div>
-                        <a href="https://x.com/hzbr_al" target="_blank" class="social-link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                            </svg>
-                            <span>@hzbr_al</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="header-price">
-                    <div class="price-value">$111,080</div>
-                    <div class="price-change">+1.70% 📈</div>
-                </div>
-            </div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } = Recharts;
+
+        // البيانات من التحليل
+        const analysisData = {
+            currentPrice: 111080,
+            ath: 126210,
+            change24h: 1.70,
+            successRate: 78,
+            recommendation: "شراء تدريجي",
+            stopLoss: 102000,
+            targets: [115000, 122000, 130000, 145000, 150000],
+            riskReward: 4.2,
+            expectedReturn: "15-35%",
             
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">القمة التاريخية</div>
-                    <div class="stat-value">$126,210</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">نسبة النجاح</div>
-                    <div class="stat-value" style="color: #10b981;">78%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Risk:Reward</div>
-                    <div class="stat-value" style="color: #60a5fa;">1:4.2</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">العائد المتوقع</div>
-                    <div class="stat-value" style="color: #fbbf24;">15-35%</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- التبويبات -->
-        <div class="tabs">
-            <div class="tab active" onclick="showTab('overview')">📊 نظرة عامة</div>
-            <div class="tab" onclick="showTab('entries')">📍 نقاط الدخول</div>
-            <div class="tab" onclick="showTab('analysis')">📚 التحليل</div>
-            <div class="tab" onclick="showTab('plan')">🗓️ خطة التنفيذ</div>
-        </div>
-
-        <!-- نظرة عامة -->
-        <div id="overview" class="content active">
-            <div class="grid grid-2">
-                <!-- مؤشر الخوف والطمع -->
-                <div class="card">
-                    <div class="card-title" style="text-align: center;">مؤشر الخوف والطمع</div>
-                    <div class="fear-greed-container">
-                        <div class="gauge-wrapper">
-                            <div class="gauge"></div>
-                            <div class="gauge-pointer" id="gaugePointer"></div>
-                        </div>
-                        <div class="gauge-value" style="color: #dc2626;">28</div>
-                        <div class="gauge-label" style="color: #dc2626;">خوف شديد</div>
-                        <div class="gauge-legend">
-                            <span style="color: #dc2626;">خوف شديد</span>
-                            <span style="color: #fbbf24;">محايد</span>
-                            <span style="color: #10b981;">طمع شديد</span>
-                        </div>
-                        <div style="margin-top: 20px; padding: 15px; background: rgba(16, 185, 129, 0.15); border-radius: 10px; border: 1px solid rgba(16, 185, 129, 0.3);">
-                            <p style="text-align: center;">✅ الخوف الشديد = فرصة شراء ذهبية تاريخياً!</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- السيناريوهات -->
-                <div class="card">
-                    <div class="card-title">📊 السيناريوهات المحتملة</div>
-                    <div class="scenario-item scenario-bullish">
-                        <div class="scenario-header">
-                            <span class="scenario-name" style="color: #10b981;">🟢 صاعد</span>
-                            <span class="scenario-percentage" style="color: #10b981;">70%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 70%; background: #10b981;">70%</div>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">استمرار الاتجاه الصاعد</p>
-                    </div>
-                    
-                    <div class="scenario-item scenario-bearish">
-                        <div class="scenario-header">
-                            <span class="scenario-name" style="color: #ef4444;">🔴 هابط</span>
-                            <span class="scenario-percentage" style="color: #ef4444;">25%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 25%; background: #ef4444;">25%</div>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">تصحيح أعمق</p>
-                    </div>
-                    
-                    <div class="scenario-item scenario-neutral">
-                        <div class="scenario-header">
-                            <span class="scenario-name" style="color: #fbbf24;">🟡 محايد</span>
-                            <span class="scenario-percentage" style="color: #fbbf24;">5%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 5%; background: #fbbf24;">5%</div>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">نطاق جانبي</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- الدعوم والمقاومات -->
-            <div class="grid grid-2">
-                <div class="card">
-                    <div class="card-title" style="color: #10b981;">🎯 الدعوم الرئيسية</div>
-                    <div class="support-item">
-                        <div class="level-header">
-                            <span class="level-price">$108,000</span>
-                            <span class="level-badge">قوي جداً</span>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">EMA 200 + POC</p>
-                    </div>
-                    <div class="support-item">
-                        <div class="level-header">
-                            <span class="level-price">$105,000</span>
-                            <span class="level-badge">قوي</span>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">دعم متعدد الاختبارات</p>
-                    </div>
-                    <div class="support-item">
-                        <div class="level-header">
-                            <span class="level-price">$102,000</span>
-                            <span class="level-badge">حرج</span>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">آخر خط دفاع</p>
-                    </div>
-                    <div class="support-item">
-                        <div class="level-header">
-                            <span class="level-price">$100,000</span>
-                            <span class="level-badge">نفسي</span>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">مستوى نفسي كبير</p>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-title" style="color: #ef4444;">🚧 المقاومات الرئيسية</div>
-                    <div class="resistance-item">
-                        <div class="level-header">
-                            <span class="level-price">$115,000</span>
-                            <span class="level-badge">قوي</span>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">تجمع EMAs</p>
-                    </div>
-                    <div class="resistance-item">
-                        <div class="level-header">
-                            <span class="level-price">$120,000</span>
-                            <span class="level-badge">متوسط</span>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">مقاومة سابقة</p>
-                    </div>
-                    <div class="resistance-item">
-                        <div class="level-header">
-                            <span class="level-price">$126,210</span>
-                            <span class="level-badge">ATH</span>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">القمة التاريخية</p>
-                    </div>
-                    <div class="resistance-item">
-                        <div class="level-header">
-                            <span class="level-price">$135,000</span>
-                            <span class="level-badge">امتداد</span>
-                        </div>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">أهداف الامتداد</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- نقاط الدخول -->
-        <div id="entries" class="content">
-            <div class="grid grid-2">
-                <div class="card">
-                    <div class="card-title">📍 نقاط الدخول الموصى بها</div>
-                    
-                    <div class="entry-card">
-                        <div class="entry-header">
-                            <div>
-                                <div class="entry-name">⭐⭐⭐ الدخول الأول - الأعلى احتمالية</div>
-                                <div class="entry-price">$105,500 - $107,000</div>
-                            </div>
-                            <div class="entry-allocation">
-                                <div style="font-size: 0.9rem; opacity: 0.7;">التخصيص</div>
-                                <div class="allocation-value">45%</div>
-                            </div>
-                        </div>
-                        <div class="stars">
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                        </div>
-                        <div class="entry-reasons">
-                            <strong>الأسباب:</strong> FVG + Bullish OB + Bat D + Fib 0.382 + EMA 200
-                        </div>
-                    </div>
-                    
-                    <div class="entry-card">
-                        <div class="entry-header">
-                            <div>
-                                <div class="entry-name">⭐⭐ الدخول الثاني - محافظ</div>
-                                <div class="entry-price">$108,000 - $110,000</div>
-                            </div>
-                            <div class="entry-allocation">
-                                <div style="font-size: 0.9rem; opacity: 0.7;">التخصيص</div>
-                                <div class="allocation-value">35%</div>
-                            </div>
-                        </div>
-                        <div class="stars">
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star empty">⭐</span>
-                        </div>
-                        <div class="entry-reasons">
-                            <strong>الأسباب:</strong> دعم قوي + POC + مستوى نفسي
-                        </div>
-                    </div>
-                    
-                    <div class="entry-card">
-                        <div class="entry-header">
-                            <div>
-                                <div class="entry-name">⭐ الدخول الثالث - للمحترفين</div>
-                                <div class="entry-price">$102,500 - $104,500</div>
-                            </div>
-                            <div class="entry-allocation">
-                                <div style="font-size: 0.9rem; opacity: 0.7;">التخصيص</div>
-                                <div class="allocation-value">20%</div>
-                            </div>
-                        </div>
-                        <div class="stars">
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star">⭐</span>
-                            <span class="star empty">⭐</span>
-                            <span class="star empty">⭐</span>
-                        </div>
-                        <div class="entry-reasons">
-                            <strong>الأسباب:</strong> Extreme Discount + Spring + Wyckoff
-                        </div>
-                    </div>
-                    
-                    <div class="stop-loss-card">
-                        <div>
-                            <div style="font-size: 0.9rem; opacity: 0.7;">🛑 Stop Loss الموحد</div>
-                            <div class="sl-price">$102,000</div>
-                        </div>
-                        <div class="sl-risk">
-                            <div style="font-size: 0.9rem; opacity: 0.7;">المخاطرة المتوسطة</div>
-                            <div class="risk-value">~4.5%</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-title">🎯 أهداف جني الأرباح</div>
-                    
-                    <div class="target-item">
-                        <div class="target-header">
-                            <span class="target-label">🥉 TP1 (20%)</span>
-                            <span class="target-price">$115,000</span>
-                        </div>
-                        <div class="target-profit">
-                            <span>الربح المتوقع:</span>
-                            <span class="profit-value">+7.5%</span>
-                        </div>
-                        <div class="target-action">
-                            <strong>الإجراء:</strong> جني 20% + Breakeven
-                        </div>
-                    </div>
-                    
-                    <div class="target-item">
-                        <div class="target-header">
-                            <span class="target-label">🥈 TP2 (30%)</span>
-                            <span class="target-price">$122,000</span>
-                        </div>
-                        <div class="target-profit">
-                            <span>الربح المتوقع:</span>
-                            <span class="profit-value">+14%</span>
-                        </div>
-                        <div class="target-action">
-                            <strong>الإجراء:</strong> جني 30% + SL إلى $112K
-                        </div>
-                    </div>
-                    
-                    <div class="target-item">
-                        <div class="target-header">
-                            <span class="target-label">🥇 TP3 (25%)</span>
-                            <span class="target-price">$130,000</span>
-                        </div>
-                        <div class="target-profit">
-                            <span>الربح المتوقع:</span>
-                            <span class="profit-value">+21.5%</span>
-                        </div>
-                        <div class="target-action">
-                            <strong>الإجراء:</strong> جني 25% + Trailing Stop 5%
-                        </div>
-                    </div>
-                    
-                    <div class="target-item">
-                        <div class="target-header">
-                            <span class="target-label">💎 TP4 (15%)</span>
-                            <span class="target-price">$145,000</span>
-                        </div>
-                        <div class="target-profit">
-                            <span>الربح المتوقع:</span>
-                            <span class="profit-value">+31%</span>
-                        </div>
-                        <div class="target-action">
-                            <strong>الإجراء:</strong> جني 15% + Trailing Stop 7%
-                        </div>
-                    </div>
-                    
-                    <div class="target-item">
-                        <div class="target-header">
-                            <span class="target-label">🚀 TP5 (10%)</span>
-                            <span class="target-price">$150,000+</span>
-                        </div>
-                        <div class="target-profit">
-                            <span>الربح المتوقع:</span>
-                            <span class="profit-value">+40%+</span>
-                        </div>
-                        <div class="target-action">
-                            <strong>الإجراء:</strong> Hold + Trailing Stop 10%
-                        </div>
-                    </div>
-                </div>
-            </div>
+            supports: [
+                { level: 108000, strength: "قوي جداً", description: "EMA 200 + POC" },
+                { level: 105000, strength: "قوي", description: "دعم متعدد الاختبارات" },
+                { level: 102000, strength: "حرج", description: "آخر خط دفاع" },
+                { level: 100000, strength: "نفسي", description: "مستوى نفسي كبير" }
+            ],
             
-            <!-- خطة الطوارئ -->
-            <div class="card">
-                <div class="card-title">⚠️ خطة الطوارئ</div>
-                <div class="grid grid-2" style="margin-top: 20px;">
-                    <div class="emergency-card emergency-red">
-                        <div class="emergency-title">🔴 إذا كسر $102K:</div>
-                        <ul class="emergency-list">
-                            <li>❌ تفعيل Stop Loss فوراً - لا تفكر!</li>
-                            <li>🔄 انتظار إعادة اختبار لـ $102K-$105K</li>
-                            <li>📉 سيناريو هابط: استهداف $98K-$100K</li>
-                            <li>⏳ إعادة تقييم التحليل بالكامل</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="emergency-card emergency-green">
-                        <div class="emergency-title">🟢 إذا صعد مباشرة فوق $115K:</div>
-                        <ul class="emergency-list">
-                            <li>⚡ دخول FOMO ممنوع منعاً باتاً!</li>
-                            <li>⏳ انتظار Pullback لـ $112K-$114K</li>
-                            <li>✅ دخول جزئي صغير (10-15% فقط)</li>
-                            <li>📊 أو انتظار $118K-$120K للبيع Short</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="emergency-card emergency-yellow">
-                        <div class="emergency-title">🟡 إذا ذهب لـ $102K-$104K:</div>
-                        <ul class="emergency-list">
-                            <li>🎯 دخول عدواني كامل (الدخول 3)</li>
-                            <li>✅ هذا أفضل سعر في السيناريو الصاعد</li>
-                            <li>💪 ثقة عالية جداً في الارتداد</li>
-                            <li>📊 توقع Volume Climax + Panic Selling</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- التحليل -->
-        <div id="analysis" class="content">
-            <div class="grid grid-2">
-                <div class="card">
-                    <div class="card-title">📚 المدارس التحليلية الثمانية</div>
-                    <div class="school-item">
-                        <div class="school-header">
-                            <span class="school-name">كلاسيكي</span>
-                            <span class="school-score">75%</span>
-                        </div>
-                        <div class="school-analysis">دعوم قوية + نماذج واضحة</div>
-                    </div>
-                    <div class="school-item">
-                        <div class="school-header">
-                            <span class="school-name">موجي</span>
-                            <span class="school-score">85%</span>
-                        </div>
-                        <div class="school-analysis">تصحيح ABC صحي</div>
-                    </div>
-                    <div class="school-item">
-                        <div class="school-header">
-                            <span class="school-name">وايكوف</span>
-                            <span class="school-score">80%</span>
-                        </div>
-                        <div class="school-analysis">Re-accumulation + Spring محتمل</div>
-                    </div>
-                    <div class="school-item">
-                        <div class="school-header">
-                            <span class="school-name">رقمي</span>
-                            <span class="school-score">70%</span>
-                        </div>
-                        <div class="school-analysis">مستويات نفسية قوية</div>
-                    </div>
-                    <div class="school-item">
-                        <div class="school-header">
-                            <span class="school-name">زمني</span>
-                            <span class="school-score">75%</span>
-                        </div>
-                        <div class="school-analysis">نوافذ زمنية مثالية</div>
-                    </div>
-                    <div class="school-item">
-                        <div class="school-header">
-                            <span class="school-name">هارموني</span>
-                            <span class="school-score">85%</span>
-                        </div>
-                        <div class="school-analysis">Bat Pattern قيد التشكل</div>
-                    </div>
-                    <div class="school-item">
-                        <div class="school-header">
-                            <span class="school-name">سيولة</span>
-                            <span class="school-score">80%</span>
-                        </div>
-                        <div class="school-analysis">Smart Money تجمع</div>
-                    </div>
-                    <div class="school-item">
-                        <div class="school-header">
-                            <span class="school-name">حجم</span>
-                            <span class="school-score">70%</span>
-                        </div>
-                        <div class="school-analysis">Selling Climax واضح</div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-title">⏰ التحليل متعدد الأطر الزمنية</div>
-                    <div class="mtf-item" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4);">
-                        <div class="mtf-header">
-                            <span class="mtf-timeframe">Weekly</span>
-                            <span class="mtf-trend" style="color: #10b981;">صاعد قوي</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 85%; background: #10b981;">85%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="mtf-item" style="background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.4);">
-                        <div class="mtf-header">
-                            <span class="mtf-timeframe">Daily</span>
-                            <span class="mtf-trend" style="color: #fbbf24;">تصحيح صحي</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 70%; background: #fbbf24;">70%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="mtf-item" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4);">
-                        <div class="mtf-header">
-                            <span class="mtf-timeframe">4H</span>
-                            <span class="mtf-trend" style="color: #ef4444;">ضعف قصير</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 45%; background: #ef4444;">45%</div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(16, 185, 129, 0.15)); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 15px;">
-                        <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;">🔄 التوافق الكلي</div>
-                        <p style="margin-bottom: 10px;">• <strong>Weekly:</strong> صاعد قوي ✅ (الصورة الكبيرة ممتازة)</p>
-                        <p style="margin-bottom: 10px;">• <strong>Daily:</strong> تصحيح صحي ⚠️ (فرصة شراء قادمة)</p>
-                        <p style="margin-bottom: 10px;">• <strong>4H:</strong> ضعف قصير المدى 🔴 (انتظار استقرار)</p>
-                        <div style="margin-top: 15px; padding: 15px; background: rgba(16, 185, 129, 0.2); border-radius: 10px;">
-                            <p style="text-align: center; font-weight: bold;">الخلاصة: الصورة الكبيرة صاعدة جداً! 🚀</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            resistances: [
+                { level: 115000, strength: "قوي", description: "تجمع EMAs" },
+                { level: 120000, strength: "متوسط", description: "مقاومة سابقة" },
+                { level: 126210, strength: "ATH", description: "القمة التاريخية" },
+                { level: 135000, strength: "امتداد", description: "أهداف الامتداد" }
+            ],
             
-            <!-- القواعد الذهبية -->
-            <div class="card">
-                <div class="card-title">📚 القواعد الذهبية</div>
-                <div class="grid grid-2">
-                    <div class="rule-item">🚫 لا FOMO - انتظر نقاط الدخول</div>
-                    <div class="rule-item">🛑 SL مقدس - لا تحذفه أبداً</div>
-                    <div class="rule-item">💰 جني تدريجي - اتبع الخطة</div>
-                    <div class="rule-item">📊 الانضباط أهم من التحليل</div>
-                    <div class="rule-item">🧘 الصبر سر كل متداول ناجح</div>
-                    <div class="rule-item">⏰ التوقيت = 60% من النجاح</div>
-                    <div class="rule-item">📱 المتابعة اليومية ضرورية</div>
-                    <div class="rule-item">🙏 التخطيط ثم التوكل</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- خطة التنفيذ -->
-        <div id="plan" class="content">
-            <div class="card">
-                <div class="card-title">🗓️ خطة التنفيذ الزمنية</div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-marker">
-                        <div class="timeline-number">1</div>
-                        <div class="timeline-line"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-week">الأسبوع 1</div>
-                        <span class="timeline-target">105K-108K</span>
-                        <p>انتظار + وضع Limit Orders</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-marker">
-                        <div class="timeline-number">2</div>
-                        <div class="timeline-line"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-week">الأسبوع 2</div>
-                        <span class="timeline-target">107K±</span>
-                        <p>تنفيذ الدخول + SL</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-marker">
-                        <div class="timeline-number">3</div>
-                        <div class="timeline-line"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-week">الأسبوع 3</div>
-                        <span class="timeline-target">115K</span>
-                        <p>TP1 + Breakeven</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-marker">
-                        <div class="timeline-number">4</div>
-                        <div class="timeline-line"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-week">الأسبوع 4-6</div>
-                        <span class="timeline-target">122K-130K</span>
-                        <p>TP2 & TP3</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-marker">
-                        <div class="timeline-number">5</div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-week">ديسمبر</div>
-                        <span class="timeline-target">145K-150K+</span>
-                        <p>TP4 & TP5</p>
-                    </div>
-                </div>
-            </div>
+            entries: [
+                { 
+                    name: "الدخول الأول", 
+                    price: "105,500 - 107,000", 
+                    allocation: 45, 
+                    confidence: 5,
+                    reasons: "FVG + OB + Bat D + Fib 0.382 + EMA 200"
+                },
+                { 
+                    name: "الدخول الثاني", 
+                    price: "108,000 - 110,000", 
+                    allocation: 35, 
+                    confidence: 4,
+                    reasons: "دعم قوي + POC + مستوى نفسي"
+                },
+                { 
+                    name: "الدخول الثالث", 
+                    price: "102,500 - 104,500", 
+                    allocation: 20, 
+                    confidence: 3,
+                    reasons: "Extreme Discount + Spring"
+                }
+            ],
             
-            <div class="final-message">
-                <div class="final-title">🚀 موعدنا عند $145,000!</div>
-                <div class="final-quote">"السوق يكافئ الصابرين المنضبطين، ويعاقب الطامعين المتسرعين"</div>
-                <div class="final-button">حظاً موفقاً، وتداول آمن! 📈✨</div>
-            </div>
-        </div>
+            scenarios: [
+                { name: "صاعد", probability: 70, color: "#10b981", description: "استمرار الاتجاه الصاعد" },
+                { name: "هابط", probability: 25, color: "#ef4444", description: "تصحيح أعمق" },
+                { name: "محايد", probability: 5, color: "#f59e0b", description: "نطاق جانبي" }
+            ],
+            
+            fearGreed: 28,
+            
+            schools: [
+                { name: "كلاسيكي", score: 75, analysis: "دعوم قوية + نماذج واضحة" },
+                { name: "موجي", score: 85, analysis: "تصحيح ABC صحي" },
+                { name: "وايكوف", score: 80, analysis: "Re-accumulation + Spring محتمل" },
+                { name: "رقمي", score: 70, analysis: "مستويات نفسية قوية" },
+                { name: "زمني", score: 75, analysis: "نوافذ زمنية مثالية" },
+                { name: "هارموني", score: 85, analysis: "Bat Pattern قيد التشكل" },
+                { name: "سيولة", score: 80, analysis: "Smart Money تجمع" },
+                { name: "حجم", score: 70, analysis: "Selling Climax واضح" }
+            ],
+            
+            mtf: [
+                { timeframe: "Weekly", trend: "صاعد قوي", score: 85, color: "#10b981" },
+                { timeframe: "Daily", trend: "تصحيح صحي", score: 70, color: "#f59e0b" },
+                { timeframe: "4H", trend: "ضعف قصير", score: 45, color: "#ef4444" }
+            ],
+            
+            priceHistory: [
+                { date: "يونيو", price: 76000 },
+                { date: "يوليو", price: 85000 },
+                { date: "أغسطس", price: 98000 },
+                { date: "سبتمبر", price: 112000 },
+                { date: "أكتوبر", price: 126210 },
+                { date: "الآن", price: 111080 }
+            ],
+            
+            timeline: [
+                { week: "الأسبوع 1", action: "انتظار + وضع Limit Orders", target: "105K-108K", status: "pending" },
+                { week: "الأسبوع 2", action: "تنفيذ الدخول + SL", target: "107K±", status: "pending" },
+                { week: "الأسبوع 3", action: "TP1 + Breakeven", target: "115K", status: "pending" },
+                { week: "الأسبوع 4-6", action: "TP2 & TP3", target: "122K-130K", status: "pending" },
+                { week: "ديسمبر", action: "TP4 & TP5", target: "145K-150K+", status: "pending" }
+            ]
+        };
 
-        <!-- التذييل -->
-        <div class="footer">
-            <div style="margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.15);">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                        <span style="font-size: 1rem; font-weight: bold;">تحليل مقدم من:</span>
+        // المكونات
+        const Header = () => (
+            <div className="gradient-bg p-6 rounded-2xl mb-6 shadow-2xl">
+                <div className="flex justify-between items-start mb-4">
+                    <div>
+                        <h1 className="text-4xl font-bold mb-2">تحليل BTCUSDT الشامل</h1>
+                        <p className="text-xl opacity-90">التحليل الفني المتقدم - 25 أكتوبر 2025</p>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 1.1rem; font-weight: bold; color: #60a5fa;">DRBASL | 966</span>
-                        <span style="font-size: 1.2rem;">🇸🇦</span>
+                    <div className="text-left">
+                        <div className="text-5xl font-bold">${analysisData.currentPrice.toLocaleString()}</div>
+                        <div className="text-xl text-green-300">+{analysisData.change24h}% 📈</div>
                     </div>
-                    <a href="https://x.com/hzbr_al" target="_blank" class="social-link">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                        <span>@hzbr_al</span>
-                    </a>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                    <div className="card p-4 rounded-xl">
+                        <div className="text-sm opacity-70">القمة التاريخية</div>
+                        <div className="text-2xl font-bold">${analysisData.ath.toLocaleString()}</div>
+                    </div>
+                    <div className="card p-4 rounded-xl">
+                        <div className="text-sm opacity-70">نسبة النجاح</div>
+                        <div className="text-2xl font-bold text-green-400">{analysisData.successRate}%</div>
+                    </div>
+                    <div className="card p-4 rounded-xl">
+                        <div className="text-sm opacity-70">Risk:Reward</div>
+                        <div className="text-2xl font-bold text-blue-400">1:{analysisData.riskReward}</div>
+                    </div>
+                    <div className="card p-4 rounded-xl">
+                        <div className="text-sm opacity-70">العائد المتوقع</div>
+                        <div className="text-2xl font-bold text-yellow-400">{analysisData.expectedReturn}</div>
+                    </div>
                 </div>
             </div>
-            <div class="footer-warning">
-                ⚠️ هذا التحليل لأغراض تعليمية فقط. التداول ينطوي على مخاطر عالية.
-            </div>
-            <div class="footer-warning">
-                تحليل معد بواسطة: نظام التحليل الفني الشامل المتقدم | 25 أكتوبر 2025
-            </div>
-        </div>
-    </div>
+        );
 
-    <script>
-        // التبديل بين التبويبات
-        function showTab(tabName) {
-            const contents = document.querySelectorAll('.content');
-            contents.forEach(content => content.classList.remove('active'));
-            
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-        }
-        
-        // تحريك مؤشر الخوف والطمع
-        window.addEventListener('load', function() {
-            const pointer = document.getElementById('gaugePointer');
-            const value = 28;
+        const FearGreedGauge = () => {
+            const value = analysisData.fearGreed;
             const rotation = (value / 100) * 180 - 90;
             
-            setTimeout(() => {
-                pointer.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
-            }, 500);
-        });
+            let status = "خوف شديد";
+            let color = "#dc2626";
+            if (value >= 75) { status = "طمع شديد"; color = "#059669"; }
+            else if (value >= 55) { status = "طمع"; color = "#10b981"; }
+            else if (value >= 45) { status = "محايد"; color = "#fbbf24"; }
+            else if (value >= 25) { status = "خوف"; color = "#f59e0b"; }
+            
+            return (
+                <div className="card p-6 rounded-2xl">
+                    <h3 className="text-2xl font-bold mb-6 text-center">مؤشر الخوف والطمع</h3>
+                    <div className="relative w-64 h-32 mx-auto mb-6">
+                        <div className="fear-gauge w-full h-full rounded-t-full"></div>
+                        <div 
+                            className="absolute bottom-0 left-1/2 w-1 h-28 bg-white origin-bottom transform -translate-x-1/2"
+                            style={{ transform: `translateX(-50%) rotate(${rotation}deg)` }}
+                        >
+                            <div className="w-3 h-3 bg-white rounded-full -mt-1 -mr-1"></div>
+                        </div>
+                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-8">
+                            <div className="text-center">
+                                <div className="text-5xl font-bold" style={{ color }}>{value}</div>
+                                <div className="text-xl font-bold" style={{ color }}>{status}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-between text-xs mt-12">
+                        <span className="text-red-500">خوف شديد</span>
+                        <span className="text-yellow-500">محايد</span>
+                        <span className="text-green-500">طمع شديد</span>
+                    </div>
+                    <div className="mt-6 p-4 bg-green-900/30 rounded-lg border border-green-500/30">
+                        <p className="text-sm text-center">✅ الخوف الشديد = فرصة شراء ذهبية تاريخياً!</p>
+                    </div>
+                </div>
+            );
+        };
+
+        const PriceChart = () => (
+            <div className="card p-6 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-6">حركة السعر التاريخية</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                    <AreaChart data={analysisData.priceHistory}>
+                        <defs>
+                            <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#10b981" stopOpacity={0.8}/>
+                                <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                            </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                        <XAxis dataKey="date" stroke="#fff" />
+                        <YAxis stroke="#fff" />
+                        <Tooltip 
+                            contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                            formatter={(value) => `$${value.toLocaleString()}`}
+                        />
+                        <Area type="monotone" dataKey="price" stroke="#10b981" fillOpacity={1} fill="url(#colorPrice)" />
+                    </AreaChart>
+                </ResponsiveContainer>
+            </div>
+        );
+
+        const SupportResistance = () => (
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="card p-6 rounded-2xl">
+                    <h3 className="text-2xl font-bold mb-6 text-green-400">🎯 الدعوم الرئيسية</h3>
+                    {analysisData.supports.map((support, idx) => (
+                        <div key={idx} className="mb-4 p-4 bg-green-900/20 rounded-lg border border-green-500/30">
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-2xl font-bold text-green-400">${support.level.toLocaleString()}</span>
+                                <span className="px-3 py-1 bg-green-500/20 rounded-full text-sm">{support.strength}</span>
+                            </div>
+                            <div className="text-sm opacity-70">{support.description}</div>
+                        </div>
+                    ))}
+                </div>
+                
+                <div className="card p-6 rounded-2xl">
+                    <h3 className="text-2xl font-bold mb-6 text-red-400">🚧 المقاومات الرئيسية</h3>
+                    {analysisData.resistances.map((resistance, idx) => (
+                        <div key={idx} className="mb-4 p-4 bg-red-900/20 rounded-lg border border-red-500/30">
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-2xl font-bold text-red-400">${resistance.level.toLocaleString()}</span>
+                                <span className="px-3 py-1 bg-red-500/20 rounded-full text-sm">{resistance.strength}</span>
+                            </div>
+                            <div className="text-sm opacity-70">{resistance.description}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const EntryPoints = () => (
+            <div className="card p-6 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-6">📍 نقاط الدخول الموصى بها</h3>
+                {analysisData.entries.map((entry, idx) => (
+                    <div key={idx} className="mb-6 p-6 bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-xl border border-blue-500/30">
+                        <div className="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 className="text-xl font-bold text-blue-300">{entry.name}</h4>
+                                <div className="text-3xl font-bold mt-2">${entry.price}</div>
+                            </div>
+                            <div className="text-left">
+                                <div className="text-sm opacity-70">التخصيص</div>
+                                <div className="text-3xl font-bold text-yellow-400">{entry.allocation}%</div>
+                            </div>
+                        </div>
+                        <div className="mb-3">
+                            <div className="flex items-center gap-1 mb-2">
+                                <span className="text-sm opacity-70">الثقة:</span>
+                                {[...Array(5)].map((_, i) => (
+                                    <span key={i} className={i < entry.confidence ? "text-yellow-400" : "text-gray-600"}>⭐</span>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="text-sm bg-black/30 p-3 rounded-lg">
+                            <strong>الأسباب:</strong> {entry.reasons}
+                        </div>
+                    </div>
+                ))}
+                
+                <div className="mt-6 p-6 bg-red-900/30 rounded-xl border border-red-500/30">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <div className="text-sm opacity-70">🛑 Stop Loss الموحد</div>
+                            <div className="text-3xl font-bold text-red-400">${analysisData.stopLoss.toLocaleString()}</div>
+                        </div>
+                        <div className="text-left">
+                            <div className="text-sm opacity-70">المخاطرة المتوسطة</div>
+                            <div className="text-2xl font-bold">~4.5%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const Targets = () => (
+            <div className="card p-6 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-6">🎯 أهداف جني الأرباح</h3>
+                {analysisData.targets.map((target, idx) => {
+                    const percentages = [20, 30, 25, 15, 10];
+                    const profits = [7.5, 14, 21.5, 31, 40];
+                    const actions = [
+                        "جني 20% + Breakeven",
+                        "جني 30% + SL إلى $112K",
+                        "جني 25% + Trailing Stop 5%",
+                        "جني 15% + Trailing Stop 7%",
+                        "Hold + Trailing Stop 10%"
+                    ];
+                    
+                    return (
+                        <div key={idx} className="mb-4 p-5 bg-gradient-to-r from-green-900/20 to-blue-900/20 rounded-xl border border-green-500/30">
+                            <div className="flex justify-between items-center mb-3">
+                                <div>
+                                    <span className="text-lg font-bold text-green-400">TP{idx + 1}</span>
+                                    <span className="text-sm opacity-70 mr-3">({percentages[idx]}% من المركز)</span>
+                                </div>
+                                <div className="text-3xl font-bold text-green-400">${target.toLocaleString()}</div>
+                            </div>
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-sm">الربح المتوقع:</span>
+                                <span className="text-xl font-bold text-yellow-400">+{profits[idx]}%</span>
+                            </div>
+                            <div className="text-sm bg-black/30 p-3 rounded-lg">
+                                <strong>الإجراء:</strong> {actions[idx]}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+
+        const Scenarios = () => (
+            <div className="card p-6 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-6">📊 السيناريوهات المحتملة</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                    <PieChart>
+                        <Pie
+                            data={analysisData.scenarios}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={({ name, probability }) => `${name} ${probability}%`}
+                            outerRadius={100}
+                            fill="#8884d8"
+                            dataKey="probability"
+                        >
+                            {analysisData.scenarios.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                        </Pie>
+                        <Tooltip />
+                    </PieChart>
+                </ResponsiveContainer>
+                
+                <div className="mt-6 space-y-4">
+                    {analysisData.scenarios.map((scenario, idx) => (
+                        <div key={idx} className="p-4 rounded-lg" style={{ background: `${scenario.color}20`, border: `1px solid ${scenario.color}40` }}>
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-xl font-bold" style={{ color: scenario.color }}>
+                                    {scenario.name === "صاعد" ? "🟢" : scenario.name === "هابط" ? "🔴" : "🟡"} {scenario.name}
+                                </span>
+                                <span className="text-2xl font-bold" style={{ color: scenario.color }}>{scenario.probability}%</span>
+                            </div>
+                            <div className="text-sm opacity-70">{scenario.description}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const SchoolsRadar = () => (
+            <div className="card p-6 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-6">📚 المدارس التحليلية الثمانية</h3>
+                <ResponsiveContainer width="100%" height={400}>
+                    <RadarChart data={analysisData.schools}>
+                        <PolarGrid stroke="rgba(255,255,255,0.2)" />
+                        <PolarAngleAxis dataKey="name" stroke="#fff" />
+                        <PolarRadiusAxis stroke="rgba(255,255,255,0.2)" />
+                        <Radar name="التقييم" dataKey="score" stroke="#10b981" fill="#10b981" fillOpacity={0.6} />
+                        <Tooltip 
+                            contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                        />
+                    </RadarChart>
+                </ResponsiveContainer>
+                
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                    {analysisData.schools.map((school, idx) => (
+                        <div key={idx} className="p-3 bg-gradient-to-r from-purple-900/20 to-blue-900/20 rounded-lg">
+                            <div className="flex justify-between items-center mb-1">
+                                <span className="font-bold">{school.name}</span>
+                                <span className="text-green-400 font-bold">{school.score}%</span>
+                            </div>
+                            <div className="text-xs opacity-70">{school.analysis}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const MTFAnalysis = () => (
+            <div className="card p-6 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-6">⏰ التحليل متعدد الأطر الزمنية</h3>
+                {analysisData.mtf.map((tf, idx) => (
+                    <div key={idx} className="mb-6 p-5 rounded-xl" style={{ background: `${tf.color}20`, border: `1px solid ${tf.color}40` }}>
+                        <div className="flex justify-between items-center mb-3">
+                            <span className="text-2xl font-bold">{tf.timeframe}</span>
+                            <span className="text-xl font-bold" style={{ color: tf.color }}>{tf.trend}</span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-3">
+                            <div 
+                                className="h-3 rounded-full progress-bar" 
+                                style={{ width: `${tf.score}%`, backgroundColor: tf.color }}
+                            ></div>
+                        </div>
+                        <div className="text-right mt-2 text-sm opacity-70">{tf.score}% قوة</div>
+                    </div>
+                ))}
+                
+                <div className="mt-6 p-5 bg-gradient-to-r from-yellow-900/30 to-green-900/30 rounded-xl border border-yellow-500/30">
+                    <h4 className="font-bold text-xl mb-3">🔄 التوافق الكلي</h4>
+                    <div className="text-lg">
+                        <p className="mb-2">• <strong>Weekly:</strong> صاعد قوي ✅ (الصورة الكبيرة ممتازة)</p>
+                        <p className="mb-2">• <strong>Daily:</strong> تصحيح صحي ⚠️ (فرصة شراء قادمة)</p>
+                        <p className="mb-2">• <strong>4H:</strong> ضعف قصير المدى 🔴 (انتظار استقرار)</p>
+                    </div>
+                    <div className="mt-4 p-3 bg-green-900/30 rounded-lg">
+                        <p className="text-center font-bold">الخلاصة: الصورة الكبيرة صاعدة جداً! 🚀</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const Timeline = () => (
+            <div className="card p-6 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-6">🗓️ خطة التنفيذ الزمنية</h3>
+                {analysisData.timeline.map((item, idx) => (
+                    <div key={idx} className="flex items-start mb-6">
+                        <div className="flex flex-col items-center ml-4">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center font-bold">
+                                {idx + 1}
+                            </div>
+                            {idx < analysisData.timeline.length - 1 && (
+                                <div className="w-1 h-20 bg-gradient-to-b from-blue-500 to-purple-500"></div>
+                            )}
+                        </div>
+                        <div className="flex-1 p-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-xl border border-blue-500/30">
+                            <div className="flex justify-between items-start mb-2">
+                                <h4 className="text-lg font-bold text-blue-300">{item.week}</h4>
+                                <span className="px-3 py-1 bg-purple-500/20 rounded-full text-sm">{item.target}</span>
+                            </div>
+                            <p className="text-sm">{item.action}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
+
+        const KeyRules = () => (
+            <div className="card p-6 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-6">📚 القواعد الذهبية</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                    {[
+                        "🚫 لا FOMO - انتظر نقاط الدخول",
+                        "🛑 SL مقدس - لا تحذفه أبداً",
+                        "💰 جني تدريجي - اتبع الخطة",
+                        "📊 الانضباط أهم من التحليل",
+                        "🧘 الصبر سر كل متداول ناجح",
+                        "⏰ التوقيت = 60% من النجاح",
+                        "📱 المتابعة اليومية ضرورية",
+                        "🙏 التخطيط ثم التوكل"
+                    ].map((rule, idx) => (
+                        <div key={idx} className="p-4 bg-gradient-to-r from-yellow-900/20 to-orange-900/20 rounded-lg border border-yellow-500/30">
+                            <p className="text-sm">{rule}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const EmergencyPlan = () => (
+            <div className="card p-6 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-6">⚠️ خطة الطوارئ</h3>
+                
+                <div className="mb-6 p-5 bg-red-900/30 rounded-xl border border-red-500/30">
+                    <h4 className="text-xl font-bold text-red-400 mb-3">🔴 إذا كسر $102K:</h4>
+                    <ul className="space-y-2 text-sm">
+                        <li>❌ تفعيل Stop Loss فوراً - لا تفكر!</li>
+                        <li>🔄 انتظار إعادة اختبار لـ $102K-$105K</li>
+                        <li>📉 سيناريو هابط: استهداف $98K-$100K</li>
+                        <li>⏳ إعادة تقييم التحليل بالكامل</li>
+                    </ul>
+                </div>
+                
+                <div className="mb-6 p-5 bg-green-900/30 rounded-xl border border-green-500/30">
+                    <h4 className="text-xl font-bold text-green-400 mb-3">🟢 إذا صعد مباشرة فوق $115K:</h4>
+                    <ul className="space-y-2 text-sm">
+                        <li>⚡ دخول FOMO ممنوع منعاً باتاً!</li>
+                        <li>⏳ انتظار Pullback لـ $112K-$114K</li>
+                        <li>✅ دخول جزئي صغير (10-15% فقط)</li>
+                        <li>📊 أو انتظار $118K-$120K للبيع Short</li>
+                    </ul>
+                </div>
+                
+                <div className="p-5 bg-yellow-900/30 rounded-xl border border-yellow-500/30">
+                    <h4 className="text-xl font-bold text-yellow-400 mb-3">🟡 إذا ذهب لـ $102K-$104K:</h4>
+                    <ul className="space-y-2 text-sm">
+                        <li>🎯 دخول عدواني كامل (الدخول 3)</li>
+                        <li>✅ هذا أفضل سعر في السيناريو الصاعد</li>
+                        <li>💪 ثقة عالية جداً في الارتداد</li>
+                        <li>📊 توقع Volume Climax + Panic Selling</li>
+                    </ul>
+                </div>
+            </div>
+        );
+
+        // المكون الرئيسي
+        const Dashboard = () => {
+            const [activeTab, setActiveTab] = useState('overview');
+            
+            const tabs = [
+                { id: 'overview', name: '📊 نظرة عامة', icon: '📊' },
+                { id: 'entries', name: '📍 نقاط الدخول', icon: '📍' },
+                { id: 'analysis', name: '📚 التحليل', icon: '📚' },
+                { id: 'plan', name: '🗓️ خطة التنفيذ', icon: '🗓️' }
+            ];
+            
+            return (
+                <div className="min-h-screen p-4 md:p-8">
+                    <div className="max-w-7xl mx-auto">
+                        <Header />
+                        
+                        {/* التبويبات */}
+                        <div className="flex gap-2 mb-6 overflow-x-auto scrollbar-hide">
+                            {tabs.map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`px-6 py-3 rounded-xl font-bold whitespace-nowrap transition-all ${
+                                        activeTab === tab.id ? 'tab-active' : 'card hover:bg-white/10'
+                                    }`}
+                                >
+                                    {tab.name}
+                                </button>
+                            ))}
+                        </div>
+                        
+                        {/* المحتوى */}
+                        <div className="space-y-6">
+                            {activeTab === 'overview' && (
+                                <>
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <FearGreedGauge />
+                                        <PriceChart />
+                                    </div>
+                                    <Scenarios />
+                                    <SupportResistance />
+                                </>
+                            )}
+                            
+                            {activeTab === 'entries' && (
+                                <>
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <EntryPoints />
+                                        <Targets />
+                                    </div>
+                                    <EmergencyPlan />
+                                </>
+                            )}
+                            
+                            {activeTab === 'analysis' && (
+                                <>
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <SchoolsRadar />
+                                        <MTFAnalysis />
+                                    </div>
+                                    <KeyRules />
+                                </>
+                            )}
+                            
+                            {activeTab === 'plan' && (
+                                <>
+                                    <Timeline />
+                                    <div className="card p-8 rounded-2xl text-center">
+                                        <h2 className="text-4xl font-bold mb-4">🚀 موعدنا عند $145,000!</h2>
+                                        <p className="text-xl opacity-70 mb-6">
+                                            "السوق يكافئ الصابرين المنضبطين، ويعاقب الطامعين المتسرعين"
+                                        </p>
+                                        <div className="inline-block px-8 py-4 gradient-green rounded-xl font-bold text-xl">
+                                            حظاً موفقاً، وتداول آمن! 📈✨
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                        
+                        {/* التذييل */}
+                        <div className="mt-8 card p-6 rounded-2xl text-center">
+                            <p className="text-sm opacity-70 mb-2">
+                                ⚠️ هذا التحليل لأغراض تعليمية فقط. التداول ينطوي على مخاطر عالية.
+                            </p>
+                            <p className="text-sm opacity-70">
+                                تحليل معد بواسطة: نظام التحليل الفني الشامل المتقدم | 25 أكتوبر 2025
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // العرض
+        ReactDOM.render(<Dashboard />, document.getElementById('root'));
     </script>
 </body>
 </html>
